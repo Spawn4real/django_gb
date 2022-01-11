@@ -32,7 +32,7 @@ class Product(models.Model):
         verbose_name='короткое описание',
         max_length=60,
     )
-    discription = models.TextField(
+    description = models.TextField(
         verbose_name='Описание',
         blank=True,
     )
