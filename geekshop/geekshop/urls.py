@@ -18,6 +18,7 @@ from django.conf.urls.static import static
 from django.contrib import admin
 from django.urls import path, include
 import mainapp.views as mainapp
+import adminapp.views as adminapp
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -25,7 +26,8 @@ urlpatterns = [
     path('products/', include('mainapp.urls', namespace='products')),
     path('contact/', mainapp.contact, name='contact'),
     path('auth/', include('authapp.urls', namespace='auth')),
-    path('basket/', include('basketapp.urls', namespace='basket'))
+    path('basket/', include('basketapp.urls', namespace='basket')),
+    path('admin_staff/', include('adminapp.urls', namespace='admin_staff'))
 ]
 
 if settings.DEBUG:
