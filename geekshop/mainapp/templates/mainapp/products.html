@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+{% extends 'mainapp/base.html' %}
+{% load static %}
+<html>
+<head>
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+</head>
+<body>
+{% block css %}
+
+{% endblock %}
+
+{% block content %}
+	<div class="container">
+		<div class="hero-white">
+			{% include 'mainapp/includes/main_menu.html' %}
+		</div>
+
+		<div class="details">
+			<div class="links clearfix">
+				<ul class="links-menu">
+					  <li>
+						  <a href="{% url 'products:category' 0 %}"
+							 class="{% if request.resolver_match.kwargs.pk == 0 %}active{% endif %}">все
+						  </a>
+					  </li>
+					{% for link in links_menu %}
+					<li>
+						  	<a href="{% url 'products:category' link.pk %}"
+							 	class="{% if request.resolver_match.kwargs.pk|add:'0' == link.pk %}
+									  	active
+										{% endif %}">
+								{{ link.name }}
+						  	</a>
+							</li>
+					  {% endfor %}
+				</ul>
+			</div>
+
+			<div class="details-products">
+				<div class="details-slider">
+					<div class="slider-product">
+						<img src="{{ hot_products.image.url }}">
+					</div>
+					<div class="slider-control">
+						<div class="block">
+							<a href="#"><img src="{% static 'img/controll.jpg' %}" alt="">
+								<div class="text"></div>
+							</a>
+						</div>
+						<div class="block">
+							<a href="#"><img src="{% static 'img/controll1.jpg' %}" alt="">
+								<div class="text"></div>
+							</a>
+						</div>
+						<div class="block">
+							<a href="#"><img src="{% static 'img/controll2.jpg' %}" alt="">
+								<div class="text"></div>
+							</a>
+						</div>
+					</div>
+				</div>
+
+				<div class="description">
+					<h3 class="big-bold">{{hot_products.name}}</h3>
+					<h3 class="red">горячее предложение</h3>
+					<p class="price"> {{hot_products.price}} <span>руб</span></p>
+					<a href="#" class="red-button">
+						заказать <i class="fa fa-chevron-right" aria-hidden="true"></i>
+					</a>
+					<div class="description-text">{{hot_products.description}}</div>
+				</div>
+			</div>
+
+
+			<div class="products_list">
+				<div class="title clearfix">
+					<h2>Категория: "{{ category.name|title }}"</h2>
+					<div class="paginator">
+
+                      {% if products.has_previous %}
+                          <li class="page-item"><a class="page-link" href="{% url 'products:page' category.pk products.previous_page_number %}"">Previous</a></li>
+                      {% endif %}
+                      <span class="current">
+                        страница {{ products.number }} из
+                        {{ products.paginator.num_pages }}
+                      </span>
+                      {% if products.has_next %}
+                        <a href="{% url 'products:page' category.pk products.next_page_number %}">
+                          >
+                        </a>
+                      {% endif %}
+                    </div>
+				</div>
+      			<div class="category-products clearfix">
+					{% for product in products %}
+					<div class="block">
+						<a href="{% url 'products:product' product.pk %}"><img src="/media/{{ product.image }}" alt="product">
+							<div class="text">
+								<img src="{% static '/img/icon-hover.png' %}" alt="hover">
+								<h4>{{ product.name }}</h4>
+								<p>{{ product.short_desc }}</p>
+							</div>
+						</a>
+					</div>
+				{% endfor %}
+				</div>
+
+<!--				<div class="title clearfix">-->
+<!--					<h2>Похожие продукты</h2>-->
+<!--					<a class="explore" href="#">показать все <img src="{% static '/img/arrow.png' %}" alt=""></a>-->
+<!--				</div>-->
+<!--				<div class="related-products clearfix">-->
+<!--					{% for product in products %}-->
+<!--					<div class="block">-->
+<!--						<a href="#"><img src="/media/{{ product.image }}" alt="">-->
+<!--							<div class="text">-->
+<!--								<img src="{% static '/img/icon-hover.png' %}" alt="img">-->
+<!--								<h4>{{ product.name }}</h4>-->
+<!--								<p>{{ product.short_desc }}</p>-->
+<!--							</div>-->
+<!--						</a>-->
+<!--					</div>-->
+<!--				{% endfor %}-->
+<!--				</div>-->
+			</div>
+		</div>
+
+		<div class="clr"></div>
+
+	</div>
+{% endblock %}
+
+</body>
+</html>
