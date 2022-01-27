@@ -38,7 +38,7 @@
                         </tr>
                         </tfoot>
                         <tbody>
-                        {% for user in objects %}
+                        {% for user in object_list %}
                             <tr {% if not user.is_active %}
                                 style="opacity: 0.5; text-decoration: line-through;"
                                 {% endif %}>
